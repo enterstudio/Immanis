@@ -49,7 +49,7 @@ function fixVideos() {
 function fixAudios() {
 	jQuery('.wp-audio-shortcode').each(function() {
 		var item = jQuery(this);
-		item.parent().parent().next().hide();
+		item.parent().next().hide();
 		item.next().show();
 	});
 }

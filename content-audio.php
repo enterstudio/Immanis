@@ -11,16 +11,7 @@
 		</footer><!-- .entry-meta -->
 
 		<div class="entry-wrapper">
-			<div class="entry-media">
-				<div class="audio-content">
-					<?php the_post_format_audio(); ?>
-					<table class="audio-title">
-						<tr>
-							<td><?php the_title(); ?></td>
-						</tr>
-					</table>
-				</div><!-- .audio-content -->
-			</div><!-- .entry-media -->
+			<?php immanis_formatted_audio(); ?>
 
 			<?php if (is_single()): ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
@@ -31,7 +22,7 @@
 			<?php endif; // is_single() ?>
 
 			<div class="entry-content">
-				<?php the_remaining_content(__('Read more', 'immanis')); ?>
+				<?php the_content(__('Read more', 'immanis')); ?>
 				<?php immanis_tags(); ?>
 				<?php if (is_single()) wp_link_pages(array('before' => '<div class="page-links"><span class="page-links-title">'.__('Pages:', 'immanis').'</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>')); ?>
 			</div><!-- .entry-content -->

@@ -1,0 +1,9 @@
+#immanis_big_video,
+#immanis_big_audio {
+	width: 100%;
+}
+
+#immanis_big_video_box,
+#immanis_big_audio_box {
+	display: none;
+}

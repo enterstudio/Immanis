@@ -1,9 +1,5 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<div class="entry-media">
-		<div class="video-content">
-			<?php the_post_format_video(); ?>
-		</div>
-	</div><!-- .entry-media -->
+	<?php immanis_formatted_video(); ?>
 
 	<div class="article-wrapper">
 		<header class="entry-header">
@@ -32,7 +28,7 @@
 			<?php endif; // is_single() ?>
 			
 			<div class="entry-content">
-				<?php the_remaining_content(__('Read more', 'immanis')); ?>
+				<?php the_content(__('Read more', 'immanis')); ?>
 				<?php immanis_tags(); ?>
 				<?php if (is_single()) wp_link_pages(array('before' => '<div class="page-links"><span class="page-links-title">'.__('Pages:', 'immanis').'</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>')); ?>
 			</div><!-- .entry-content -->

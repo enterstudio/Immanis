@@ -61,6 +61,17 @@ function immanis_scripts_styles() {
 add_action('wp_enqueue_scripts', 'immanis_scripts_styles');
 
 /**
+ * Admin styles
+ */
+function immanis_admin_scripts_styles() {
+	wp_enqueue_style('immanis-admin-style', get_template_directory_uri().'/admin.css');
+
+	wp_enqueue_script('immanis-admin', get_template_directory_uri().'/js/admin.js', array(), '20130718', true);
+}
+
+add_action('admin_enqueue_scripts', 'immanis_admin_scripts_styles');
+
+/**
  * Creates a nicely formatted and more specific title element text for output
  * in head of document, based on current view.
  */
@@ -439,6 +450,18 @@ add_shortcode('gallery', array('wpShower', 'catchGallery'));
 class wpShower {
 	private static $galleries = array();
 
+	/**
+	 * Function to get the content earlier than it needs to be printed; shortcodes are catched this way
+	 */
+	public static function filteredContent($content = null) {
+		if ($content === null) {
+			$content = get_the_content(__('Read More<span></span>', 'immanis'));
+		}
+		$content = apply_filters('the_content', $content);
+		$content = str_replace('<p></p>', '', $content); // TODO: fix it (youtube embed adds empty paragraphs?)
+		return str_replace(']]>', ']]&gt;', $content);
+	}
+
 	public static function catchGallery($attr) {
 		self::$galleries[] = $attr;
 	}
@@ -464,6 +487,118 @@ class wpShower {
 
 		return false;
 	}
+}
+
+/* Audio & video boxes for posts */
+function immanis_big_video_box($post) {
+	$value = get_post_meta($post->ID, 'immanis_big_video', true);
+	?>
+	<p>
+		<textarea id="immanis_big_video" name="immanis_big_video" rows="4" cols="40" placeholder="<?php _e('Enter your video link, embed code or shortcode here:', 'immanis'); ?>"><?php echo $value ?></textarea>
+	</p>
+	<?php
+}
+
+function immanis_big_audio_box($post) {
+	$value = get_post_meta($post->ID, 'immanis_big_audio', true);
+	?>
+	<p>
+		<textarea id="immanis_big_audio" name="immanis_big_audio" rows="4" cols="40" placeholder="<?php _e('Enter your audio link, embed code or shortcode here:', 'immanis'); ?>"><?php echo $value ?></textarea>
+	</p>
+	<?php
+}
+
+function immanis_boxes() {
+	add_meta_box(
+		'immanis_big_video_box',
+		__('Video', 'immanis'),
+		'immanis_big_video_box',
+		'post',
+		'normal',
+		'high'
+	);
+	add_meta_box(
+		'immanis_big_audio_box',
+		__('Audio', 'immanis'),
+		'immanis_big_audio_box',
+		'post',
+		'normal',
+		'high'
+	);
+}
+
+add_action('add_meta_boxes', 'immanis_boxes');
+
+/* Save action for posts */
+function immanis_save_postdata($post_id) {
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+		return $post_id;
+
+	if (!isset($_POST['post_type'])) {
+		return $post_id;
+	}
+
+	// First we need to check if the current user is authorised to do this action.
+	if ('page' == $_POST['post_type']) {
+		if (!current_user_can('edit_page', $post_id))
+			return;
+	}
+	else {
+		if (!current_user_can('edit_post', $post_id))
+			return;
+	}
+
+	if ($_POST['post_type'] == 'post') {
+		$media = array('audio' => false, 'video' => false);
+		$format = get_post_format(get_the_ID());
+		if ($format == 'audio' || $format == 'video') $media[$format] = true;
+		foreach ($media as $key => $save) {
+			if ($save) {
+				$value = isset($_POST['immanis_big_'.$key]) ? $_POST['immanis_big_'.$key] : '';
+				if (!update_post_meta($post_id, 'immanis_big_'.$key, $value)) {
+					add_post_meta($post_id, 'immanis_big_'.$key, $value, true);
+				}
+			}
+			else {
+				update_post_meta($post_id, 'immanis_big_'.$key, '');
+			}
+		}
+	}
+}
+
+add_action('save_post', 'immanis_save_postdata');
+
+function immanis_formatted_audio() {
+	if (post_password_required()) return;
+
+	$meta = get_post_meta(get_the_ID(), 'immanis_big_audio', true);
+	?>
+
+	<div class="entry-media entry-audio">
+		<?php echo wpShower::filteredContent($meta); ?>
+		<table class="audio-title">
+			<tr>
+				<td><?php the_title(); ?></td>
+			</tr>
+		</table>
+	</div><!-- .entry-media -->
+
+	<?php
+}
+
+function immanis_formatted_video() {
+	if (post_password_required()) return;
+
+	$meta = get_post_meta(get_the_ID(), 'immanis_big_video', true);
+	?>
+
+	<div class="entry-media entry-video">
+		<div class="video-content">
+			<?php echo wpShower::filteredContent($meta); ?>
+		</div>
+	</div><!-- .entry-media -->
+
+	<?php
 }
 
 /**

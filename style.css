@@ -1333,6 +1333,7 @@ a.gallery-next:hover {
  */
 
 .entry-media {
+	position: relative;
 	margin: 0 auto 24px;
 	max-width: 1060px;
 	width: 100%;
@@ -1355,14 +1356,8 @@ a.gallery-next:hover {
 	max-width: 100%;
 }
 
-.format-audio .audio-content {
-	width: 100%;
-	position: relative;
-}
-
 .format-audio .wp-audio-shortcode {
 	height: 78px !important; /* Override mediaelement.js style */
-	margin: 10px 0 20px 0;
 	max-width: 100% !important; /* Override mediaelement.js style */
 	background: none;
 }
