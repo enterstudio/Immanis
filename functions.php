@@ -343,7 +343,8 @@ endif;
  * Url for "link" posts
  */
 function immanis_get_link_url() {
-	$has_url = get_the_post_format_url();
+	$content = get_the_content();
+	$has_url = get_url_in_content($content);
 
 	return ($has_url) ? $has_url : apply_filters('the_permalink', get_permalink());
 }
