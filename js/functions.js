@@ -266,7 +266,7 @@ function wpshowerGallery(selector) {
 	this.setCurrent(0);
 }
 
-( function( $ ) {
+(function($) {
 	/**
 	 * Enables menu toggle for small screens.
 	 */
@@ -302,7 +302,7 @@ function wpshowerGallery(selector) {
 	function initScroll() {
 		if (!scroll_inited && $(window).width() >= parallax_width) {
 			scroll_inited = true;
-			$(document).scroll(function(){
+			$(document).scroll(function() {
 				scrolly();
 			});
 		}
@@ -314,7 +314,7 @@ function wpshowerGallery(selector) {
 	};
 
 	initScroll();
-	
+
 	$(window).resize(function() {
 		initScroll();
 	});
@@ -325,14 +325,14 @@ function wpshowerGallery(selector) {
 	 *
 	 * @link http://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
 	 */
-	$( window ).on( 'hashchange', function() {
-		var element = $( location.hash );
+	$(window).on('hashchange', function() {
+		var element = $(location.hash);
 
-		if ( element ) {
-			if ( ! /^(?:a|select|input|button)$/i.test( element.tagName ) )
-				element.attr( 'tabindex', -1 );
+		if (element) {
+			if (!/^(?:a|select|input|button)$/i.test(element.tagName))
+				element.attr('tabindex', -1);
 
 			element.focus();
 		}
-	} );
-} )( jQuery );
+	});
+})(jQuery);

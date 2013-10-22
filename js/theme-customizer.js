@@ -5,11 +5,11 @@
  * Things like site title and description changes.
  */
 
-( function( $ ) {
+(function($) {
 	// Site title and description.
-	wp.customize( 'blogname', function( value ) {
-		value.bind( function( to ) {
-			$( '.site-title a' ).text( to );
-		} );
-	} );
-} )( jQuery );
+	wp.customize('blogname', function(value) {
+		value.bind(function(to) {
+			$('.site-title a').text(to);
+		});
+	});
+})(jQuery);

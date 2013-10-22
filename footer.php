@@ -6,7 +6,7 @@
 				<div id="footer-separator"></div>
 
 				<div class="site-info">
-					<?php do_action( 'immanis_credits' ); ?>
+					<?php do_action('immanis_credits'); ?>
 
 					<div id="social">
 						<span>Everywhere</span>
@@ -25,16 +25,16 @@
 						);
 						foreach ($array as $key => $value):
 							if ($options[$key] != ''):
-							?>
+						?>
 								<a href="<?php echo $options[$key]; ?>"><?php echo $value; ?></a>
-							<?php
+						<?php
 							endif;
 						endforeach;
 						?>
 					</div>
 
 					<div id="site-info-wrapper">
-						&#169; 2013 <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?></a> / Powered By <a href="<?php echo esc_url( __( 'http://wordpress.org/', 'immanis' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'immanis' ); ?>">WordPress</a>
+						&#169; 2013 <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_attr(get_bloginfo('name', 'display')); ?></a> / Powered By <a href="<?php echo esc_url(__('http://wordpress.org/', 'immanis')); ?>" title="<?php esc_attr_e('Semantic Personal Publishing Platform', 'immanis'); ?>">WordPress</a>
 						<br />
 						Designed & Crafted by <a href="http://wpshower.com/">Wpshower</a>
 					</div>

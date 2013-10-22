@@ -6,7 +6,7 @@
 
 		<footer class="entry-meta">
 			<?php immanis_entry_meta(); ?>
-			<?php edit_post_link( __( 'Edit', 'immanis' ), '<span class="edit-link">', '</span>' ); ?>
+			<?php edit_post_link(__('Edit', 'immanis'), '<span class="edit-link">', '</span>'); ?>
 			<?php immanis_share(); ?>
 		</footer><!-- .entry-meta -->
 
@@ -22,18 +22,18 @@
 				</div><!-- .audio-content -->
 			</div><!-- .entry-media -->
 
-			<?php if ( is_single() ) : ?>
+			<?php if (is_single()): ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
-			<?php else : ?>
+			<?php else: ?>
 			<h1 class="entry-title">
-				<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'immanis' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
+				<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr(sprintf(__('Permalink to %s', 'immanis'), the_title_attribute('echo=0'))); ?>" rel="bookmark"><?php the_title(); ?></a>
 			</h1>
 			<?php endif; // is_single() ?>
 
 			<div class="entry-content">
-				<?php the_remaining_content( __( 'Read more', 'immanis' ) ); ?>
+				<?php the_remaining_content(__('Read more', 'immanis')); ?>
 				<?php immanis_tags(); ?>
-				<?php if ( is_single() ) wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'immanis' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+				<?php if (is_single()) wp_link_pages(array('before' => '<div class="page-links"><span class="page-links-title">'.__('Pages:', 'immanis').'</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>')); ?>
 			</div><!-- .entry-content -->
 		</div>
 
