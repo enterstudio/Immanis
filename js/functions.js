@@ -1,5 +1,3 @@
-var videos = ['iframe', 'object', 'embed'];
-
 function fixLinks() {
 	jQuery('.entry-content a').each(function() {
 		var item = jQuery(this);
@@ -21,29 +19,6 @@ function getRatio(item, type) {
 		}
 	}
 	return 0;
-}
-
-function fixVideos() {
-	jQuery('.video-content').each(function() {
-		var item = jQuery(this);
-		var ratio = 0;
-		for (i = 0; i < videos.length; i++) {
-			ratio = getRatio(item, videos[i]);
-			if (ratio !== 0) {
-				item.css({
-					'padding-bottom': ratio + '%',
-					'height': 0
-				});
-				item.find('>').css({
-					'position': 'absolute',
-					'top': 0,
-					'left': 0,
-					'height': '100%'
-				});
-				return;
-			}
-		}
-	});
 }
 
 function fixAudios() {
@@ -290,7 +265,7 @@ function wpshowerGallery(selector) {
 	});
 
 	fixLinks();
-	fixVideos();
+	jQuery('.entry-video').wpShowerResponsiveVideos();
 	fixAudios();
 
 	/**

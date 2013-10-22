@@ -42,6 +42,8 @@ function immanis_scripts_styles() {
 	if (is_singular() && comments_open() && get_option('thread_comments'))
 		wp_enqueue_script('comment-reply');
 
+	wp_enqueue_script('wpshower-responsive-videos', get_template_directory_uri().'/js/wpshower-responsive-videos.js', array('jquery'), '2013-08-15', true);
+
 	wp_enqueue_script('immanis-script', get_template_directory_uri().'/js/functions.js', array('jquery'), '20130416', true);
 
 	wp_enqueue_style('google-lato', 'http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic');
@@ -175,7 +177,7 @@ function immanis_paging_nav() {
 									nav.remove();
 								}
 								fixLinks();
-								fixVideos();
+								result.find('.entry-video').wpShowerResponsiveVideos();
 								fixAudios();
 								result.find('.wp-video-shortcode').mediaelementplayer();
 								result.find('.wp-audio-shortcode').mediaelementplayer({
@@ -231,10 +233,10 @@ function immanis_infinite_scroll_js() {
 				'contentSelector': '#content'
 			};
 			jQuery(infinite_scroll.contentSelector).infinitescroll(infinite_scroll, function(arrayOfNewElems) {
-				fixLinks();
-				fixVideos();
-				fixAudios();
 				var items = jQuery(arrayOfNewElems);
+				fixLinks();
+				items.find('.entry-video').wpShowerResponsiveVideos();
+				fixAudios();
 				items.find('.wp-video-shortcode').mediaelementplayer();
 				items.find('.wp-audio-shortcode').mediaelementplayer({
 					audioHeight: 78,
