@@ -452,6 +452,7 @@ add_shortcode('gallery', array('wpShower', 'catchGallery'));
 
 class wpShower {
 	private static $galleries = array();
+	private static $content_galleries = 0;
 
 	/**
 	 * Function to get the content earlier than it needs to be printed; shortcodes are catched this way
@@ -465,11 +466,67 @@ class wpShower {
 		return str_replace(']]>', ']]&gt;', $content);
 	}
 
-	public static function catchGallery($attr) {
-		self::$galleries[] = $attr;
+	public static function getContentAndAttachments() {
+		$content = self::filteredContent();
+
+		$galleries = self::getGalleries();
+		$attachments = array();
+		foreach ($galleries as $gallery) {
+			foreach ($gallery as $attachment_id) {
+				$attachments[] = $attachment_id;
+			}
+		}
+		return array('content' => $content, 'attachments' => $attachments);
 	}
 
-	public static function getGalleries() {
+	public static function catchGallery($attr) {
+		if (!isset($attr['ids']) || trim($attr['ids']) == '') return '';
+
+		$attachments = explode(',', $attr['ids']);
+
+		if (empty(self::$galleries) && (get_post_format(get_the_ID()) == 'gallery')) {
+			self::$galleries[] = $attachments;
+			return '';
+		}
+
+		$html = '<div class="template-gallery">';
+		foreach ($attachments as $attachment) {
+			$image = get_post($attachment);
+			$thumbnail_link = wp_get_attachment_image_src($attachment, 'post-thumbnail');
+			$src = wp_get_attachment_image_src($attachment, 'immanis-image');
+			$html .= '<a class="fancybox" href="'.$src[0].'" data-fancybox-group="gallery" title="'.$image->post_excerpt.'"><img src="'.$thumbnail_link[0].'" alt="" /></a>';
+		}
+		$html .= '</div>';
+
+		self::$content_galleries++;
+		if (self::$content_galleries == 1) {
+			wp_enqueue_script('jquery-mousewheel', get_template_directory_uri().'/js/jquery.mousewheel-3.0.6.pack.js', array('jquery'), '20130701', true);
+			wp_enqueue_style('fancybox-style', get_template_directory_uri().'/fancybox/jquery.fancybox.css');
+			wp_enqueue_script('fancybox', get_template_directory_uri().'/fancybox/jquery.fancybox.pack.js', array('jquery'), '20130701', true);
+			$html .= <<<END
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery(".fancybox").fancybox({
+		openEffect: 'none',
+		closeEffect: 'none',
+		nextEffect: 'none',
+		prevEffect: 'none',
+		loop: false,
+		helpers: {
+			title: {
+				type: 'inside'
+			}
+		}
+	});
+});
+</script>
+END;
+		}
+
+		return $html;
+	}
+
+	private static function getGalleries() {
 		$results = self::$galleries;
 		self::$galleries = array();
 		return $results;
@@ -570,6 +627,31 @@ function immanis_save_postdata($post_id) {
 }
 
 add_action('save_post', 'immanis_save_postdata');
+
+
+function immanis_formatted_gallery($attachments) {
+	?>
+	<div class="entry-media-gallery">
+		<div class="gallery-wrapper">
+			<table>
+				<tr>
+	<?php foreach ($attachments as $attachment):
+		$image = get_post($attachment);
+	?>
+					<td data-caption="<?php echo $image->post_excerpt; ?>">
+						<?php echo wp_get_attachment_link($attachment, 'immanis-image'); ?>
+					</td>
+	<?php endforeach; ?>
+				</tr>
+			</table>
+			<a class="gallery-prev" href="#"></a>
+			<a class="gallery-next" href="#"></a>
+			<div class="bullets"></div>
+		</div>
+		<div class="gallery-caption"></div>
+	</div><!-- .entry-media -->
+	<?php
+}
 
 function immanis_formatted_audio() {
 	if (post_password_required()) return;

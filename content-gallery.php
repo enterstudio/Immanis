@@ -1,44 +1,8 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-<?php
-$content = get_the_content();
-$content = apply_filters('the_content', $content);
-$content = str_replace(']]>', ']]&gt;', $content);
-
-$galleries = wpShower::getGalleries();
-$attachments = array();
-foreach ($galleries as $gallery) {
-	if (!isset($gallery['ids'])) continue;
-
-	$ids = explode(',', $gallery['ids']);
-	foreach ($ids as $id) {
-		$attachments[] = $id;
-	}
-}
-if ($attachments):
-?>
-	<div class="entry-media-gallery">
-		<div class="gallery-wrapper">
-			<table>
-				<tr>
-	<?php foreach ($attachments as $attachment):
-		$image = get_post($attachment);
-		$link = $galleries[0]['link'] == 'post' ? true : false;
+	<?php
+	$result = wpShower::getContentAndAttachments();
+	immanis_formatted_gallery($result['attachments']);
 	?>
-					<td data-caption="<?php echo $image->post_excerpt; ?>">
-						<?php echo wp_get_attachment_link($attachment, 'immanis-image', $link); ?>
-					</td>
-	<?php endforeach; ?>
-				</tr>
-			</table>
-			<a class="gallery-prev" href="#"></a>
-			<a class="gallery-next" href="#"></a>
-			<div class="bullets"></div>
-		</div>
-		<div class="gallery-caption"></div>
-	</div><!-- .entry-media -->
-
-<?php endif; ?>
 
 	<div class="article-wrapper">
 		<header class="entry-header">
@@ -67,7 +31,7 @@ if ($attachments):
 			<?php endif; // is_single() ?>
 
 			<div class="entry-content">
-				<?php echo $content; ?>
+				<?php echo $result['content']; ?>
 				<?php if (is_single()): ?>
 					<?php immanis_tags(); ?>
 					<?php wp_link_pages(array('before' => '<div class="page-links"><span class="page-links-title">'.__('Pages:', 'immanis').'</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>')); ?>
