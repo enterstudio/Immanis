@@ -102,6 +102,6 @@ function immanis_header_style() {
 function immanis_admin_header_image() {
 	$header_image = get_header_image();
 	?>
-	<div id="headimg" style="background: url(<?php echo $header_image; ?>) 0 0 no-repeat; background-size: 100% auto; <?php if ( $header_image ) echo ' padding-bottom: 49%;'; ?> border: none;"></div>
+	<div id="headimg" style="background: url(<?php echo $header_image; ?>) 0 0 no-repeat; background-size: 100% auto; <?php if ($header_image) echo ' padding-bottom: 49%;'; ?> border: none;"></div>
 	<?php
 }

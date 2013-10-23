@@ -225,7 +225,7 @@ function immanis_infinite_scroll_js() {
 				loading: {
 					img: "<?php echo get_stylesheet_directory_uri(); ?>/images/loadmore.svg",
 					msgText: "",
-					finishedMsg: "<?php _e( 'The End', 'immanis' ); ?>"
+					finishedMsg: "<?php _e('The End', 'immanis'); ?>"
 				},
 				'nextSelector': '.paging-navigation .nav-previous a',
 				'navSelector': '.paging-navigation',
@@ -305,9 +305,9 @@ function immanis_entry_meta() {
 		immanis_entry_date();
 
 	// Translators: used between list items, there is a space after the comma.
-	/*$categories_list = get_the_category_list( __( ', ', 'immanis' ) );
-	if ( $categories_list ) {
-		echo '<span class="categories-links">' . $categories_list . '</span>';
+	/*$categories_list = get_the_category_list(__(', ', 'immanis'));
+	if ($categories_list) {
+		echo '<span class="categories-links">'.$categories_list.'</span>';
 	}*/
 }
 endif;
