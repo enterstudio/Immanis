@@ -33,7 +33,5 @@
 				<?php if (is_single()) wp_link_pages(array('before' => '<div class="page-links"><span class="page-links-title">'.__('Pages:', 'immanis').'</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>')); ?>
 			</div><!-- .entry-content -->
 		</div>
-
-		<div class="clear"></div>
 	</div>
 </article><!-- #post -->

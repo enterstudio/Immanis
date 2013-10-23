@@ -38,8 +38,6 @@
 						<br />
 						Designed & Crafted by <a href="http://wpshower.com/">Wpshower</a>
 					</div>
-
-					<div class="clear"></div>
 				</div><!-- .site-info -->
 			</div>
 		</footer><!-- #colophon -->

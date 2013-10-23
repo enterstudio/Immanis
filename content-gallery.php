@@ -38,8 +38,6 @@
 				<?php endif; // is_single() ?>
 			</div><!-- .entry-content -->
 		</div>
-
-		<div class="clear"></div>
 	</div>
 </article><!-- #post -->
 

@@ -926,6 +926,12 @@ body.home .format-twitter {
 	margin: 0 auto;
 }
 
+.article-wrapper:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
 .entry-header {
 	float: left;
 }
@@ -2235,6 +2241,12 @@ footer input[type="search"] {
 	clear: both;
 	height: 20px;
 	border-bottom: 1px solid #1f1f1f;
+}
+
+.site-info:after {
+	content: '';
+	display: block;
+	clear: both;
 }
 
 #site-info-wrapper {

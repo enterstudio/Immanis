@@ -37,7 +37,5 @@
 			</div><!-- .entry-content -->
 			<?php endif; ?>
 		</div>
-
-		<div class="clear"></div>
 	</div>
 </article><!-- #post -->

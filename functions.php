@@ -415,8 +415,6 @@ function immanis_comment($comment, $args, $depth) {
 					<?php comment_text(); ?>
 				</div><!-- .comment-content -->
 			</div>
-
-			<div class="clear"></div>
 		</article><!-- .comment-body -->
 
 	<?php
@@ -784,8 +782,6 @@ function immanis_twitter() {
 					<a href="http://twitter.com/'.$result[0]->user->screen_name.'">Follow us on Twitter</a>
 				</span>
 			</footer><!-- .entry-meta -->
-
-			<div class="clear"></div>
 		</div>
 	</article><!-- #post -->';
 
