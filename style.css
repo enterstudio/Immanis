@@ -230,13 +230,10 @@ samp {
 }
 
 s {
-	font-family: 'PT Serif', serif;
-	font-size: 14px;
-	margin: 20px 0;
-	padding: 20px;
 	white-space: pre;
 	white-space: pre-wrap;
 	word-wrap: break-word;
+	text-decoration: none;
 }
 
 blockquote,

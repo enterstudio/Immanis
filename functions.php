@@ -735,14 +735,7 @@ function immanis_share() {
 /**
  * Latest posts from Twitter
  */
-function twitter_feed($username) {
-	$url = 'http://api.twitter.com/1/statuses/user_timeline/'.$username.'.json?count=1';
-	$json = file_get_contents($url);
-	if ($json == false) return false;
-
-	$result = json_decode($json);
-	return $result;
-}
+include 'inc/wpshower-twitter.php';
 
 function immanis_twitter() {
 	$enabled = get_theme_mod('immanis_twitter_enabled');
@@ -760,8 +753,8 @@ function immanis_twitter() {
 		}
 	}
 
-	$result = twitter_feed($username);
-	if ($result == false) return;
+	$result = wpShowerTwitter::getFeed($username, 1);
+	if (empty($result)) return;
 
 	$html = '<article class="format-twitter">
 		<div class="article-wrapper">
@@ -770,16 +763,13 @@ function immanis_twitter() {
 			</header><!-- .entry-header -->
 
 			<div class="entry-wrapper">
-				<div class="entry-content">
-					<a href="http://twitter.com/'.$result[0]->user->screen_name.'">@'.$result[0]->user->screen_name.'</a>
-					'.$result[0]->text.'
-				</div><!-- .entry-content -->
+				<div class="entry-content">'.$result[0]['text'].'</div>
 			</div>
 
 			<footer class="entry-meta">
-				<span class="date">'.date('F d, Y', strtotime($result[0]->created_at)).'</span>
+				<span class="date">'.date('F d, Y', $result[0]['time']).'</span>
 				<span>
-					<a href="http://twitter.com/'.$result[0]->user->screen_name.'">Follow us on Twitter</a>
+					<a href="http://twitter.com/'.$username.'">Follow us on Twitter</a>
 				</span>
 			</footer><!-- .entry-meta -->
 		</div>
