@@ -43,6 +43,6 @@
 
 <script type="text/javascript">
 jQuery(function() {
-	var gallery = new wpshowerGallery('#post-<?php the_ID(); ?>');
+	var gallery = new wpshowerGallery('#post-<?php the_ID(); ?> .entry-media-gallery');
 });
 </script>

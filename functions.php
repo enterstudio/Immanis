@@ -188,7 +188,7 @@ function immanis_paging_nav() {
 								result.each(function() {
 									var item = jQuery(this);
 									if (item.hasClass('format-gallery')) {
-										var gallery = new wpshowerGallery('#' + item.attr('id'));
+										var gallery = new wpshowerGallery('#' + item.attr('id') + ' .entry-media-gallery');
 									}
 								});
 							}
@@ -246,7 +246,7 @@ function immanis_infinite_scroll_js() {
 				items.each(function() {
 					var item = jQuery(this);
 					if (item.hasClass('format-gallery')) {
-						var gallery = new wpshowerGallery('#' + item.attr('id'));
+						var gallery = new wpshowerGallery('#' + item.attr('id') + ' .entry-media-gallery');
 					}
 				});
 			});

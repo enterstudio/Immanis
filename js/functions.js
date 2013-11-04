@@ -32,7 +32,7 @@ function fixAudios() {
 function wpshowerGallery(selector) {
 	this.thumbs = 1;
 	this.selector = selector;
-	this.total_thumbs = jQuery(this.selector + ' .entry-media-gallery td').length;
+	this.total_thumbs = jQuery(this.selector + ' td').length;
 	this.thumb_width = 1110;
 
 	this.margin = 0;
