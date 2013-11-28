@@ -3,24 +3,21 @@ class wpShowerTwitter {
 	public static function getFeed($username, $limit = 3) {
 		$results = array();
 
-		$html = file_get_contents('https://twitter.com/'.$username);
-		if ($html === false) return $results;
-
-		$preg = preg_match('/<ol class="stream-items js-navigable-stream" id="stream-items-id">(.*?)<\/ol>/s', $html, $matches);
-		if (!$preg) return $results;
+		$remote = wp_remote_get('https://twitter.com/'.$username);
+		if ($remote instanceof WP_Error || $remote['response']['code'] != 200) return $results;
 
 		$preg = preg_match_all(
 			'/<li class="js-stream-item(.*?)data-time="(.*?)"(.*?)class="js-tweet-text tweet-text">(.*?)<\/p>(.*?)<\/li>/s',
-			$matches[1],
-			$matches_all
+			$remote['body'],
+			$matches
 		);
 		if (!$preg) return $results;
 
 		$count = 0;
-		foreach ($matches_all[2] as $i => $time) {
+		foreach ($matches[2] as $i => $time) {
 			$results[] = array(
 				'time' => $time,
-				'text' => str_replace('href="/', 'href="https://twitter.com/', $matches_all[4][$i])
+				'text' => str_replace('href="/', 'href="https://twitter.com/', $matches[4][$i])
 			);
 			$count++;
 			if ($count == $limit) return $results;
